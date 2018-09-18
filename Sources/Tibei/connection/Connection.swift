@@ -26,7 +26,7 @@ public class Connection: NSObject, StreamDelegate {
     var isReady: Bool = false
     var pingTimer = Timer()
     /// :nodoc:
-    override public var hashValue: Int {
+    override public var hash: Int {
         return self.identifier.id.hashValue
     }
     
@@ -53,12 +53,12 @@ public class Connection: NSObject, StreamDelegate {
     
     private func openStream(_ stream: Stream) {
         stream.delegate = self
-        stream.schedule(in: RunLoop.current, forMode: .defaultRunLoopMode)
+        stream.schedule(in: RunLoop.current, forMode: RunLoop.Mode.default)
         stream.open()
     }
     
     private func closeStream(_ stream: Stream) {
-        stream.remove(from: RunLoop.current, forMode: .defaultRunLoopMode)
+        stream.remove(from: RunLoop.current, forMode: RunLoop.Mode.default)
         stream.close()
     }
     

@@ -58,7 +58,7 @@ extension SecondServerViewController: ConnectionResponder {
         case let textMessage as TextMessage:
             let labelContent = NSMutableAttributedString(string: "\(textMessage.sender): \(textMessage.content)")
             
-            labelContent.addAttribute(NSUnderlineStyleAttributeName, value: NSUnderlineStyle.styleDouble.rawValue, range: NSMakeRange(0, textMessage.sender.characters.count + 1))
+            labelContent.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.double.rawValue, range: NSMakeRange(0, textMessage.sender.count + 1))
             
             DispatchQueue.main.async {
                 self.incomingMessageLabel.attributedText = labelContent
@@ -80,7 +80,7 @@ extension SecondServerViewController: ConnectionResponder {
         let rawContent: String = "New connection with id #\(connectionID.hashValue)"
         let labelContent = NSMutableAttributedString(string: rawContent)
         
-        labelContent.addAttribute(NSForegroundColorAttributeName, value: UIColor.purple, range: NSMakeRange(0, rawContent.characters.count))
+        labelContent.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.purple, range: NSMakeRange(0, rawContent.count))
         
         DispatchQueue.main.async {
             self.incomingMessageLabel.attributedText = labelContent
@@ -91,7 +91,7 @@ extension SecondServerViewController: ConnectionResponder {
         let rawContent: String = "Lost connection with id #\(connectionID.hashValue)"
         let labelContent = NSMutableAttributedString(string: rawContent)
         
-        labelContent.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: NSMakeRange(0, rawContent.characters.count))
+        labelContent.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red, range: NSMakeRange(0, rawContent.count))
         
         DispatchQueue.main.async {
             self.incomingMessageLabel.attributedText = labelContent
@@ -99,7 +99,7 @@ extension SecondServerViewController: ConnectionResponder {
     }
     
     func processError(_ error: Error, fromConnectionWithID connectionID: ConnectionID?) {
-        print("Error raised from connection #\(connectionID?.hashValue):")
+        print("Error raised from connection #\(connectionID?.hashValue ?? -1):")
         print(error)
     }
 }
